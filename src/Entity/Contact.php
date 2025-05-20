@@ -54,7 +54,7 @@ class Contact
 
     public function setFirstName(string $firstName): self
     {
-        $this->firstName = $firstName; // \htmlspecialchars(strip_tags($firstName)); //Sécurité supplémentaire qui vérifie si l'email est bien formaté
+        $this->firstName = \htmlspecialchars(strip_tags($firstName)); //Sécurité supplémentaire qui vérifie si l'email est bien formaté
         return $this;
     }
 
@@ -76,7 +76,7 @@ class Contact
 
     public function setEmail(string $email): self
     {
-        $this->email = $email;//filter_var($email, \FILTER_SANITIZE_EMAIL); //Sécurité supplémentaire qui vérifie si l'email est bien formaté
+        $this->email = filter_var($email, \FILTER_SANITIZE_EMAIL); //Sécurité supplémentaire qui vérifie si l'email est bien formaté
         return $this;
         /**
          * Si l'utilisateur rentrer dans le champ input Robert<script>@gmail.com
