@@ -3,16 +3,16 @@
 namespace App\Service;
 
 use App\Entity\Contact;
+use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Address;
 
 final class ContactMailer
 {
     public function __construct(
         private MailerInterface $mailer,
-        private $toEmail //injecté depuis les services
-    ) {}
+        private string $toEmail /* injecté en service */
+    ){}
 
     public function sendContactMessage(Contact $contact): void
     {
@@ -29,7 +29,8 @@ final class ContactMailer
                 'subject' => $contact->getSubject(),
                 'message' => $contact->getMessage(),
                 'phone' => $contact->getPhone()
-            ]);
+            ])
+        ;
 
         $this->mailer->send($email);
     }

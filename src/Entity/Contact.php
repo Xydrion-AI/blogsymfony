@@ -6,46 +6,48 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Contact
 {
-    #[Assert\NotBlank(message: 'le prénom est obligatoire')]
+    #[Assert\NotBlank(message: 'Le prénom est obligatoire')]
     #[Assert\Length(
         min: 2,
         max: 50,
-        minMessage: 'Le prénom doit contenir au moins {{ limit }} caractères',
-        maxMessage: 'Le prénom ne doit pas dépasser {{ limit }} caractères'
+        minMessage: 'Le prénom doit contenir au moins {{ limit }} caractère',
+        maxMessage: 'Le prénom ne doit pas dépassé {{ limit }} caractère'
     )]
     private string $firstName;
 
-    #[Assert\NotBlank(message: 'le nom est obligatoire')]
+    #[Assert\NotBlank(message: 'Le nom est obligatoire')]
     #[Assert\Length(
         min: 2,
         max: 50,
-        minMessage: 'Le nom doit contenir au moins {{ limit }} caractères',
-        maxMessage: 'Le nom ne doit pas dépasser {{ limit }} caractères'
+        minMessage: 'Le nom doit contenir au moins {{ limit }} caractère',
+        maxMessage: 'Le nom ne doit pas dépassé {{ limit }} caractère'
     )]
     private string $lastName;
 
-    #[Assert\NotBlank(message: 'L\'email est obligatoire')]
-    #[Assert\Email(message: 'L\'adresse email n\'est pas valide')]
+    #[Assert\NotBlank(message: 'Le email est obligatoire')]
+    #[Assert\Email(message: 'L\'adresse mail est pas valide')]
     private string $email;
 
-    #[Assert\NotBlank(message: 'l\'objet est obligatoire')]
+    #[Assert\NotBlank(message: 'Le l\'objet est obligatoire')]
     #[Assert\Length(
         min: 2,
         max: 50,
-        minMessage: 'l\'objet doit contenir au moins {{ limit }} caractères',
-        maxMessage: 'l\'objet ne doit pas dépasser {{ limit }} caractères'
+        minMessage: 'Le l\'objet doit contenir au moins {{ limit }} caractère',
+        maxMessage: 'Le l\'objet ne doit pas dépassé {{ limit }} caractère'
     )]
     private string $subject;
 
     #[Assert\NotBlank(message: 'Le message est obligatoire')]
     private string $message;
 
-    #[Assert\NotBlank(message: 'Le numéro de téléphone est obligatoire')]
+    #[Assert\NotBlank(message: 'Le téléphone est obligatoire')]
     #[Assert\Regex(
-        pattern: '/^(\+33|0)[1-9][0-9]{8}$/',
-        message: 'Le numéro de téléphone n\'est pas valide'
+        pattern: '/^\+?[0-9\s\-\(\)]{7,20}$/',
+        message: 'Le numéro de téléphone est invalide'
     )]
     private string $phone;
+
+    // Getters et Setters
 
     public function getFirstName(): string
     {
@@ -54,7 +56,7 @@ class Contact
 
     public function setFirstName(string $firstName): self
     {
-        $this->firstName = \htmlspecialchars(strip_tags($firstName)); //Sécurité supplémentaire qui vérifie si l'email est bien formaté
+        $this->firstName = htmlspecialchars(strip_tags($firstName));
         return $this;
     }
 
@@ -76,14 +78,12 @@ class Contact
 
     public function setEmail(string $email): self
     {
-        $this->email = filter_var($email, \FILTER_SANITIZE_EMAIL); //Sécurité supplémentaire qui vérifie si l'email est bien formaté
+        $this->email = filter_var($email, \FILTER_SANITIZE_EMAIL);
         return $this;
         /**
-         * Si l'utilisateur rentrer dans le champ input Robert<script>@gmail.com
-         * la sortie va être robert@gmail.com
-         *
-         * @return string
-         */
+         *Si l'utilisateur rentre dans le champs inpout Robert<script>@gmail.com
+         *La sortie va être Robert@gmail.com
+        */
     }
 
     public function getSubject(): string
