@@ -1,0 +1,36 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<h1>Authentification à deux facteurs</h1>
+
+	<p>{{ "auth_code"|trans({}, 'SchebTwoFactorBundle') }}
+		{{ twoFactorProvider }}</p>
+	{% if authenticationError %}
+		<p>{{ authenticationError|trans(authenticationErrorData, 'SchebTwoFactorBundle') }}</p>
+	{% endif %}
+	<form class="woocommerce-form-login" action="{{ checkPathUrl ? checkPathUrl: path(checkPathRoute) }}" method="post">
+		<div class="form-group">
+			<input id="_auth_code" type="text" name="{{ authCodeParameterName }}" autocomplete="one-time-code" autofocus/>
+		</div>
+
+		{% if displayTrustedOption %}
+			<div class="form-group">
+				<div class="custom-checkbox">
+					<input id="_trusted" type="checkbox" name="{{ trustedParameterName }}"/>
+					<label for="_trusted">{{ "trusted"|trans({}, 'SchebTwoFactorBundle') }}</label>
+				</div>
+			</div>
+		{% endif %}
+
+		<div class="form-group">
+			<button type="submit" class="th-btn">{{ "login"|trans({}, 'SchebTwoFactorBundle') }}</button>
+		</div>
+
+		{% if isCsrfProtectionEnabled %}<input type="hidden" name="{{ csrfParameterName }}" value="{{ csrf_token(csrfTokenId) }}">
+		{% endif %}
+
+	</form>
+
+
+{% endblock %}
