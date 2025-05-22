@@ -5,7 +5,23 @@ scheb_two_factor:
         - Symfony\Component\Security\Http\Authenticator\Token\PostAuthenticationToken
     email:
         digits: 10
-        enabled: true
+        enabled: false
         sender_email: noreply@localhost.fr
         sender_name : Toto Society
         template: authentification/2fa_form.html.twig
+    trusted_device:
+        enabled: true
+        lifetime: 3600
+        extend_lifetime: true
+        cookie_name: trusted_device
+        cookie_secure: false
+        cookie_same_site: "lax"
+        cookie_domain: "127.0.0.1:8000"
+        cookie_path: "/"
+    google:
+        enabled: true                  # If Google Authenticator should be enabled, default false
+        server_name: Server Name       # Server name used in QR code
+        issuer: Issuer Name            # Issuer name used in QR code
+        digits: 6                      # Number of digits in authentication code
+        leeway: 1
+        template: security/2fa_form.html.twig   # Template used to render the authentication form

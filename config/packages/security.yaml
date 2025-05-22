@@ -34,6 +34,7 @@ security:
             two_factor:
                 auth_form_path: 2fa_login # Ceci est une exception, nous devons mettre la route dans le fichier routes.yaml
                 check_path: 2fa_login_check
+                trusted_parameter_name: _trusted
                 # by default, the feature is enabled by checking a checkbox in the
                 # login form, uncomment the following line to always enable it.
                 #always_remember_me: true

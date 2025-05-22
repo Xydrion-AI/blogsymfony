@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vérification 2FA Google{% endblock %}
+
+{% block body %}
+    <h1>Validation à deux facteurs</h1>
+    <p>Veuillez saisir le code de votre application Google Authenticator :</p>
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <form method="post" action="{{ path('2fa_login_check') }}">
+        <label for="auth_code">Code à 6 chiffres</label>
+        <input type="text" id="auth_code" name="_auth_code" pattern="\d{6}" required autofocus autocomplete="one-time-code" />
+
+        <button type="submit">Valider</button>
+    </form>
+{% endblock %}
